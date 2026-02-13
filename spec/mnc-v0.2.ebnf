@@ -1,0 +1,132 @@
+(* MNC v0.2 — Compact EBNF
+   Notes:
+   - This EBNF specifies the *structural* grammar and tokens.
+   - Semantic constraints (e.g., “header must be first non-empty line”) are noted inline.
+   - Node bodies are Markdown and are treated as opaque text until the next unescaped BlockHeader.
+*)
+
+MNCFile        = { BlankLine } CanvasHeader NL
+                 { ( BlankLine | StyleBlock | RuleLine | NodeBlock | LinkLine | NoteLine ) } EOF ;
+
+(* Canvas header must be the first non-empty line. *)
+CanvasHeader   = DirCanvasHeader ;
+DirCanvasHeader= "=" SP "canvas:" SP Title SP Version ;
+
+Version        = "v" Int "." Int ;
+
+(* -------------------------
+   Directives and escaping
+   ------------------------- *)
+
+(* A line is considered a directive only if it begins at column 0 and is not escaped.
+   Escaped directives are treated as literal text (NoteLine or MarkdownLine).
+*)
+EscapedLine    = "\" ( "=" | "-" ) { AnyChar } ;  (* minimal: leading backslash escapes first char *)
+
+(* -------------------------
+   Styles
+   ------------------------- *)
+
+StyleBlock     = StyleHeader NL { StylePropLine NL } ;
+StyleHeader    = "==" SP "style:" SP StyleName ;
+StyleName      = TrimmedText ;  (* may contain spaces; trimmed by parser *)
+
+StylePropLine  = "-" SP Key ":" SP ValueText ;
+Key            = KeyChar { KeyChar } ;
+KeyChar        = Letter | Digit | "_" | "." | "-" ;
+ValueText      = { AnyCharButNL } ;   (* remainder of line *)
+
+(* -------------------------
+   Rules
+   ------------------------- *)
+
+RuleLine       = "- rule:" SP Tag SP "->" SP "style" SP StyleName NL ;
+Tag            = "#" TagChar { TagChar } ;
+TagChar        = Letter | Digit | "_" | "-" ;
+
+(* -------------------------
+   Nodes
+   ------------------------- *)
+
+NodeBlock      = NodeHeader NL NodeBody ;
+NodeHeader     = "==" SP NodeID ":" SP NodeTitle [ SP "(" PropList ")" ] ;
+NodeID         = Letter { Letter | Digit | "_" | "-" } ;  (* semantic: length 2..32, starts with Letter *)
+NodeTitle      = TrimmedText ;
+
+PropList       = Prop { SP Prop } ;
+Prop           = FlagProp | Key "=" PropValue ;
+FlagProp       = Key ;  (* e.g., magnet *)
+
+PropValue      = QuotedString | BareValue ;
+BareValue      = BareChar { BareChar } ;
+BareChar       = AnyCharButSpaceOrRParen ;
+
+QuotedString   = DQuote { QChar } DQuote ;
+QChar          = EscSeq | AnyCharButDQuoteOrNL ;
+EscSeq         = "\" ( "\" | DQuote ) ;
+
+(* Node body: all lines until the next unescaped BlockHeader (== at column 0) or EOF.
+   Inside NodeBody, lines starting with "- rule:" or "- link:" are NOT directives; they are markdown text.
+*)
+NodeBody       = { MarkdownLine NL } ;
+MarkdownLine   = EscapedDirectiveLikeLine | NonHeaderLine ;
+
+EscapedDirectiveLikeLine
+              = "\" ( "=" | "-" ) { AnyCharButNL } ;  (* allows \==, \=, \- etc. *)
+
+NonHeaderLine  = ( NotBlockHeaderStart { AnyCharButNL } ) ;
+NotBlockHeaderStart
+              = ? any char sequence where the line does NOT begin with "==" at column 0 ? ;
+
+(* -------------------------
+   Link lines (explicit)
+   ------------------------- *)
+
+LinkLine       = "- link:" SP LinkSpec [ SP PropList ] NL ;
+
+LinkSpec       = NodeID SP ( "->" | "-" ) SP NodeID ;
+
+(* -------------------------
+   Notes / blank lines
+   ------------------------- *)
+
+BlankLine      = { SP } NL ;
+
+(* Outside any NodeBody, non-directive, non-empty lines are notes.
+
+Canonical save policy (normative):
+- Top-level notes MUST NOT be emitted by canonical save (i.e., canonical save drops them).
+*)
+NoteLine       = ( EscapedDirectiveLikeLine | NonDirectiveLine ) NL ;
+
+NonDirectiveLine
+              = ? a line that does not begin with any of:
+                   "=" SP
+                   "==" SP
+                   "- rule:"
+                   "- link:"
+                 at column 0, and is not BlankLine ? ;
+
+(* -------------------------
+   Lexical helpers
+   ------------------------- *)
+
+Title          = TrimmedText ;
+TrimmedText    = { AnyCharButNL } ;  (* parsers trim leading/trailing spaces as specified *)
+Int            = Digit { Digit } ;
+
+NL             = "\n" ;
+SP             = " " { " " | "\t" } ;  (* spec: directives must start at column 0; inside line, SP can include tabs *)
+DQuote         = "\"" ;
+
+AnyChar        = ? any Unicode scalar value ? ;
+AnyCharButNL   = ? any Unicode scalar value except "\n" ? ;
+AnyCharButDQuoteOrNL
+              = ? any Unicode scalar value except "\"" and "\n" ? ;
+AnyCharButSpaceOrRParen
+              = ? any Unicode scalar value except SP and ")" and "\n" ? ;
+
+Letter         = "A"…"Z" | "a"…"z" ;
+Digit          = "0"…"9" ;
+
+EOF            = ? end of file ? ;
