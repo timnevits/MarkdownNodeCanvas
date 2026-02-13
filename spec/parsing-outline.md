@@ -227,8 +227,7 @@ Initialize map:
 For each `InlineLink`:
 - Create / merge edge entry
 - If inline `md_title` exists:
-  - set `edge.props["type"] = md_title` **only if not already set** (first-wins), OR last-wins; pick one and document it.
-  - Recommended: last-wins to match general override behavior.
+  - set `edge.props["type"] = md_title` using **last-wins** for repeated inline links with the same `(src, dst)`, consistent with `spec/mnc-v0.2.md`.
 
 ### 7.2 Apply explicit link lines
 For each `LinkOverride` in file order:
@@ -256,7 +255,7 @@ Errors (fail parse):
 - Invalid NodeID syntax in headers
 
 Warnings (continue):
-- Duplicate NODEID (last-wins or first-wins; recommend error in strict mode)
+- Duplicate NODEID (recommended as an error in default v0.2 parsing)
 - Inline links to missing NODEIDs (allow; resolve later; warn)
 - Link overrides referencing unknown nodes (warn)
 - Malformed rule/link/property tokens (warn, preserve raw line if possible)

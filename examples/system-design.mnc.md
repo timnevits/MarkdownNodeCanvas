@@ -1,4 +1,3 @@
-# examples/system-design.mnc.md
 = canvas: System Design Demo v0.2
 
 == style: Default
@@ -69,7 +68,7 @@ which reads [User DB](mnc:UDB1 "Data").
 If auth passes, the gateway forwards to [Orders Service](mnc:ORD1 "Control").
 
 ```
-This is code; link-looking text may be ignored by some parsers:
+This is code; link-looking text must be ignored by v0.2 inline link extraction:
 [Not a real edge](mnc:NOPE "Control")
 ```
 

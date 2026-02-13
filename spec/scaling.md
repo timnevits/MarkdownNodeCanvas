@@ -21,14 +21,14 @@ The strategy is: **partition + index + progressive summarization + strong taggin
 Pick one primary axis and stick to it:
 
 **System design**
-- By bounded context / domain: `auth.mnc`, `payments.mnc`, `notifications.mnc`
-- By layer: `edge.mnc`, `services.mnc`, `data.mnc`
-- By lifecycle: `ingest.mnc`, `compute.mnc`, `serve.mnc`, `ops.mnc`
+- By bounded context / domain: `auth.mnc.md`, `payments.mnc.md`, `notifications.mnc.md`
+- By layer: `edge.mnc.md`, `services.mnc.md`, `data.mnc.md`
+- By lifecycle: `ingest.mnc.md`, `compute.mnc.md`, `serve.mnc.md`, `ops.mnc.md`
 
 **Narrative / interactive fiction**
-- By act/sequence: `act1.mnc`, `act2.mnc`, `act3.mnc`
-- By location: `cannery.mnc`, `downtown.mnc`, `archives.mnc`
-- By character POV: `krystin.mnc`, `mother.mnc`, `supervisor.mnc`
+- By act/sequence: `act1.mnc.md`, `act2.mnc.md`, `act3.mnc.md`
+- By location: `cannery.mnc.md`, `downtown.mnc.md`, `archives.mnc.md`
+- By character POV: `krystin.mnc.md`, `mother.mnc.md`, `supervisor.mnc.md`
 
 ### Practical benefit
 - LLM edits become localized.
@@ -39,7 +39,7 @@ Pick one primary axis and stick to it:
 
 # 2) Add a “Hub” canvas (index/navigation)
 
-Create a top-level `hub.mnc` with:
+Create a top-level `hub.mnc.md` with:
 - high-level nodes summarizing each subcanvas
 - links to “entry point” nodes in each subcanvas
 
@@ -47,13 +47,13 @@ You need cross-file linking. Keep it simple:
 
 ### Option A (no spec change): use normal Markdown URLs
 In hub node body:
-- `[Auth Canvas](file:auth.mnc)`
-- `[Payments Canvas](file:payments.mnc)`
+- `[Auth Canvas](file:auth.mnc.md)`
+- `[Payments Canvas](file:payments.mnc.md)`
 
 Your app can treat `file:` links as “open canvas”.
 
 ### Option B (small future extension): `mncfile:` scheme
-- `[Auth](mncfile:auth.mnc#AUTH_ENTRY)`
+- `[Auth](mncfile:auth.mnc.md#AUTH_ENTRY)`
 
 Do not add this until you actually implement multi-file navigation.
 

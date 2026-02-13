@@ -1,4 +1,3 @@
-# examples/interactive-fiction.mnc.md
 = canvas: IF Demo Canvas v0.2
 
 == style: Default
@@ -74,7 +73,7 @@ Directive-looking lines inside node bodies are Markdown, not structure:
 - link: This should NOT be parsed as a link line because it's in a node body.
 - rule: This should NOT be parsed as a rule line because it's in a node body.
 
-A fenced code block (note: some parsers may choose to ignore inline links inside code fences):
+A fenced code block (inline links inside code fences must be ignored in v0.2):
 ```
 Example link-looking text:
 [Do not follow](mnc:SHOULD_NOT_PARSE "Choice")

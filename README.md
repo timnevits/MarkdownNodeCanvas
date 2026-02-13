@@ -171,26 +171,28 @@ markdown-node-canvas/
     interactive-fiction.mnc.md
     system-design.mnc.md
   tests/
-    01_header_required.mnc.md
-    02_header_first_nonempty.mnc.md
-    03_directive_precedence_in_node_body.mnc.md
-    04_escaping_directives_everywhere.mnc.md
-    05_properties_and_quotes.mnc.md
-    06_inline_links_and_types.mnc.md
-    07_link_overrides_merge.mnc.md
-    08_structural_only_edges.mnc.md
-    09_code_fence_inline_links.mnc.md
-    10_canonicalization_smoke.mnc.md
-    11_style_rules_resolution_smoke.mnc.md
-    12_undirected_vs_directed.mnc.md
-    13_code_fence_variants_and_info_string.mnc.md
-    14_column0_whitespace_and_tabs.mnc.md
-    15_crlf_normalization.mnc.md
-    16_duplicate_nodeid_error.mnc.md
-    17_malformed_props_tokenization.mnc.md
-    18_inline_link_edge_cases.mnc.md
-    19_undirected_edge_normalization.mnc.md
-    20_override_type_wins_over_inline_default.mnc.md
+    README.md
+    fixtures/
+      01_header_required.mnc.md
+      02_header_first_nonempty.mnc.md
+      03_directive_precedence_in_node_body.mnc.md
+      04_escaping_directives_everywhere.mnc.md
+      05_properties_and_quotes.mnc.md
+      06_inline_links_and_types.mnc.md
+      07_link_overrides_merge.mnc.md
+      08_structural_only_edges.mnc.md
+      09_code_fence_inline_links.mnc.md
+      10_canonicalization_smoke.mnc.md
+      11_style_rules_resolution_smoke.mnc.md
+      12_undirected_vs_directed.mnc.md
+      13_code_fence_variants_and_info_string.mnc.md
+      14_column0_whitespace_and_tabs.mnc.md
+      15_crlf_normalization.mnc.md
+      16_duplicate_nodeid_error.mnc.md
+      17_malformed_props_tokenization.mnc.md
+      18_inline_link_edge_cases.mnc.md
+      19_undirected_edge_normalization.mnc.md
+      20_override_type_wins_over_inline_default.mnc.md
 ```
 
 
