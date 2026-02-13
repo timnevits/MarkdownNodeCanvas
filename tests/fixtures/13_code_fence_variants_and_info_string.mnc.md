@@ -9,15 +9,15 @@
 == A01: Source
 Real edge: [Real](mnc:A04 "Control")
 
-|||python
+```python
 This is code (python fence). Should NOT produce edges:
 [Nope1](mnc:A02 "Control")
-|||
+```
 
-|||
+~~~
 This is code (tilde-style fence stand-in). Should NOT produce edges:
 [Nope2](mnc:A03 "Control")
-|||
+~~~
 
 == A02: Fake Target 1
 Should not be linked.
