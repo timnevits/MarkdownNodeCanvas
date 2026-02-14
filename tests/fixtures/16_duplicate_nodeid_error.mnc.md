@@ -3,7 +3,7 @@
 # Recommended: FAIL for determinism.
 # Expected: FAIL (duplicate NODEID A01)
 
-= canvas: Duplicate NodeID v0.2
+= canvas: Duplicate NodeID v0.3
 
 == A01: First Definition
 Body 1.

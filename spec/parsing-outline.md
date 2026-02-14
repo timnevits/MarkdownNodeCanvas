@@ -1,4 +1,4 @@
-## Reference parsing algorithm outline (MNC v0.2)
+## Reference parsing algorithm outline (MNC v0.3)
 
 This is an implementation-oriented outline (state machine + data model). It aims for deterministic behavior and minimal ambiguity.
 
@@ -143,11 +143,11 @@ Value parsing:
   - parse quoted string with escapes `\"` and `\\`
 - Else value is the raw token tail.
 
-Typed coercions (v0.2 core):
+Typed coercions (v0.3 core):
 - `pos`: parse `x,y` ints
 - `size`: parse `WxH` ints
 - `seq`, `width`, `borderWidth`, `fontSize`: int
-- `opacity`: keep string in v0.2 (or float if you decide)
+- `opacity`: keep string in v0.3 (or float if you decide)
 - Everything else: string
 
 Store:
@@ -185,7 +185,7 @@ Algorithm:
 3) Remaining text (if any) is prop list using the same tokenizer as node props.
 4) Store as `LinkOverride(directed = (op=="->"), a=nodeA, b=nodeB, props, flags)`
 
-Note: in v0.2, these lines may also create edges (structural-only edge) if no inline link exists.
+Note: in v0.3, these lines may also create edges (structural-only edge) if no inline link exists.
 
 ---
 
@@ -227,7 +227,7 @@ Initialize map:
 For each `InlineLink`:
 - Create / merge edge entry
 - If inline `md_title` exists:
-  - set `edge.props["type"] = md_title` using **last-wins** for repeated inline links with the same `(src, dst)`, consistent with `spec/mnc-v0.2.md`.
+  - set `edge.props["type"] = md_title` using **last-wins** for repeated inline links with the same `(src, dst)`, consistent with `spec/mnc-v0.3.md`.
 
 ### 7.2 Apply explicit link lines
 For each `LinkOverride` in file order:
@@ -255,7 +255,7 @@ Errors (fail parse):
 - Invalid NodeID syntax in headers
 
 Warnings (continue):
-- Duplicate NODEID (recommended as an error in default v0.2 parsing)
+- Duplicate NODEID (recommended as an error in default v0.3 parsing)
 - Inline links to missing NODEIDs (allow; resolve later; warn)
 - Link overrides referencing unknown nodes (warn)
 - Malformed rule/link/property tokens (warn, preserve raw line if possible)
@@ -264,7 +264,7 @@ Warnings (continue):
 
 # 9) Canonical save (normative)
 
-Canonical save MUST follow the ordering and property-order rules defined in `spec/mnc-v0.2.md` (Section 12). This section describes one implementation approach consistent with the spec.
+Canonical save MUST follow the ordering and property-order rules defined in `spec/mnc-v0.3.md` (Section 12). This section describes one implementation approach consistent with the spec.
 
 1) Emit header.
 2) Emit styles sorted by name. Within each style block, emit `- key: value` lines in the **original authored order** (preserve insertion order).

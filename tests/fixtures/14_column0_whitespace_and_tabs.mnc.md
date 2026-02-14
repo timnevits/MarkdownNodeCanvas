@@ -7,7 +7,7 @@
 # - The first real structural block is the unindented header, style, rule, and node below.
 # - Node A01 body should include lines that look like directives but are indented.
 
-= canvas: Column 0 Directives v0.2
+= canvas: Column 0 Directives v0.3
 
 	== style: IndentedNotAStyle
 	- border: #ffffff

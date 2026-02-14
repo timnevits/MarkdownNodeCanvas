@@ -5,7 +5,7 @@
 # - Override supplies route/line/width
 # - Second override changes route and adds label; route should be final value
 
-= canvas: Link Override Merge v0.2
+= canvas: Link Override Merge v0.3
 
 == A01: Source
 [To target](mnc:A02 "Control")

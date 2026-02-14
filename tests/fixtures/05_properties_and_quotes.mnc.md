@@ -5,7 +5,7 @@
 # - Unknown prop preserved: note="..."
 # - Quote escaping handled: \" and \\
 
-= canvas: Properties and Quotes v0.2
+= canvas: Properties and Quotes v0.3
 
 == style: Dark Panel
 - bg: #111111

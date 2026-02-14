@@ -1,7 +1,7 @@
-(* MNC v0.2 — Compact EBNF
+(* MNC v0.3 — Compact EBNF
    Notes:
-   - This EBNF specifies the *structural* grammar and tokens.
-   - Semantic constraints (e.g., “header must be first non-empty line”) are noted inline.
+   - This EBNF specifies structural grammar and target token forms.
+   - Semantic constraints (deterministic precedence, alias resolution, canonical save) are normative in mnc-v0.3.md.
    - Node bodies are Markdown and are treated as opaque text until the next unescaped BlockHeader.
 *)
 
@@ -21,23 +21,26 @@ Version        = "v" Int "." Int ;
 (* A line is considered a directive only if it begins at column 0 and is not escaped.
    Escaped directives are treated as literal text (NoteLine or MarkdownLine).
 *)
-EscapedLine    = "\" ( "=" | "-" ) { AnyChar } ;  (* minimal: leading backslash escapes first char *)
+EscapedLine    = "\\" ( "=" | "-" ) { AnyChar } ;
 
 (* -------------------------
-   Styles
+   Unified tag-style blocks
    ------------------------- *)
 
 StyleBlock     = StyleHeader NL { StylePropLine NL } ;
-StyleHeader    = "==" SP "style:" SP StyleName ;
-StyleName      = TrimmedText ;  (* may contain spaces; trimmed by parser *)
+StyleHeader    = "==" SP "style:" SP StyleTarget ;
+
+(* Canonical target is Tag; legacy StyleName target is accepted for deterministic migration. *)
+StyleTarget    = Tag | StyleName ;
+StyleName      = TrimmedText ;
 
 StylePropLine  = "-" SP Key ":" SP ValueText ;
 Key            = KeyChar { KeyChar } ;
 KeyChar        = Letter | Digit | "_" | "." | "-" ;
-ValueText      = { AnyCharButNL } ;   (* remainder of line *)
+ValueText      = { AnyCharButNL } ;
 
 (* -------------------------
-   Rules
+   Legacy rules (migration input only)
    ------------------------- *)
 
 RuleLine       = "- rule:" SP Tag SP "->" SP "style" SP StyleName NL ;
@@ -55,7 +58,7 @@ NodeTitle      = TrimmedText ;
 
 PropList       = Prop { SP Prop } ;
 Prop           = FlagProp | Key "=" PropValue ;
-FlagProp       = Key ;  (* e.g., magnet *)
+FlagProp       = Key ;
 
 PropValue      = QuotedString | BareValue ;
 BareValue      = BareChar { BareChar } ;
@@ -63,20 +66,37 @@ BareChar       = AnyCharButSpaceOrRParen ;
 
 QuotedString   = DQuote { QChar } DQuote ;
 QChar          = EscSeq | AnyCharButDQuoteOrNL ;
-EscSeq         = "\" ( "\" | DQuote ) ;
+EscSeq         = "\\" ( "\\" | DQuote ) ;
 
 (* Node body: all lines until the next unescaped BlockHeader (== at column 0) or EOF.
-   Inside NodeBody, lines starting with "- rule:" or "- link:" are NOT directives; they are markdown text.
+   Inside NodeBody, lines starting with "- rule:" or "- link:" are markdown text, not directives.
 *)
 NodeBody       = { MarkdownLine NL } ;
 MarkdownLine   = EscapedDirectiveLikeLine | NonHeaderLine ;
 
 EscapedDirectiveLikeLine
-              = "\" ( "=" | "-" ) { AnyCharButNL } ;  (* allows \==, \=, \- etc. *)
+              = "\\" ( "=" | "-" ) { AnyCharButNL } ;
 
 NonHeaderLine  = ( NotBlockHeaderStart { AnyCharButNL } ) ;
 NotBlockHeaderStart
               = ? any char sequence where the line does NOT begin with "==" at column 0 ? ;
+
+(* -------------------------
+   Inline mnc link targets (for extraction)
+   ------------------------- *)
+
+MncTarget      = MncIdTarget | MncAliasTarget ;
+MncIdTarget    = "mnc:" NodeID ;
+MncAliasTarget = "mnc:" AliasTitleToken ;
+AliasTitleToken= DQuote { AliasChar } DQuote ;
+AliasChar      = AliasEsc | AnyCharButDQuoteOrNL ;
+AliasEsc       = "\\" DQuote ;
+
+(* Semantic validation:
+   - Ambiguous alias title => E_ALIAS_AMBIGUOUS
+   - Missing alias title target => E_ALIAS_UNRESOLVED
+   - Any malformed mnc:"... target token => E_ALIAS_MALFORMED
+*)
 
 (* -------------------------
    Link lines (explicit)
@@ -92,11 +112,6 @@ LinkSpec       = NodeID SP ( "->" | "-" ) SP NodeID ;
 
 BlankLine      = { SP } NL ;
 
-(* Outside any NodeBody, non-directive, non-empty lines are notes.
-
-Canonical save policy (normative):
-- Top-level notes MUST NOT be emitted by canonical save (i.e., canonical save drops them).
-*)
 NoteLine       = ( EscapedDirectiveLikeLine | NonDirectiveLine ) NL ;
 
 NonDirectiveLine
@@ -112,11 +127,11 @@ NonDirectiveLine
    ------------------------- *)
 
 Title          = TrimmedText ;
-TrimmedText    = { AnyCharButNL } ;  (* parsers trim leading/trailing spaces as specified *)
+TrimmedText    = { AnyCharButNL } ;
 Int            = Digit { Digit } ;
 
 NL             = "\n" ;
-SP             = " " { " " | "\t" } ;  (* spec: directives must start at column 0; inside line, SP can include tabs *)
+SP             = " " { " " | "\t" } ;
 DQuote         = "\"" ;
 
 AnyChar        = ? any Unicode scalar value ? ;
@@ -126,7 +141,7 @@ AnyCharButDQuoteOrNL
 AnyCharButSpaceOrRParen
               = ? any Unicode scalar value except SP and ")" and "\n" ? ;
 
-Letter         = "A"…"Z" | "a"…"z" ;
-Digit          = "0"…"9" ;
+Letter         = "A"..."Z" | "a"..."z" ;
+Digit          = "0"..."9" ;
 
 EOF            = ? end of file ? ;

@@ -5,7 +5,7 @@
 # - Inline default type would be "Choice".
 # - Override sets type=Control; final edge type MUST be "Control".
 
-= canvas: Override Type Wins v0.2
+= canvas: Override Type Wins v0.3
 
 == A01: Source
 Inline edge with default type: [Go](mnc:A02 "Choice")

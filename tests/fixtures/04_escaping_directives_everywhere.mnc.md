@@ -5,7 +5,7 @@
 # - Escaped lines inside node body remain literal text
 # - One actual style block and one actual node block are parsed
 
-= canvas: Escaping v0.2
+= canvas: Escaping v0.3
 
 \= canvas: This is literal text, not a header
 \== style: NotAStyle

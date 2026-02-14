@@ -1,5 +1,5 @@
 # tests/README.md
-This folder contains test fixtures intended to validate Markdown Node Canvas (MNC) v0.2 parsing behavior.
+This folder contains test fixtures intended to validate Markdown Node Canvas (MNC) v0.3 parsing behavior.
 
 These fixtures are intentionally small and targeted. They are designed to support:
 

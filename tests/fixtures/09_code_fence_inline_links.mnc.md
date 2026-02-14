@@ -5,7 +5,7 @@
 # - Only edge A01 -> A03 exists
 # - No edge A01 -> A02
 
-= canvas: Code Fence Inline Links v0.2
+= canvas: Code Fence Inline Links v0.3
 
 == A01: Source
 This should be a real edge: [Real](mnc:A03 "Control")

@@ -8,7 +8,7 @@
 # - Derived edges: A01 -> A02, A01 -> A03, A01 -> A04 exist
 # - No edge is created for the normal URL link (it is not mnc:)
 
-= canvas: Inline Link Edge Cases v0.2
+= canvas: Inline Link Edge Cases v0.3
 
 == A01: Source
 One line, multiple mnc links: [A02](mnc:A02 "Choice") and [A03](mnc:A03 "Reference") and [Escaped \] Bracket Text](mnc:A04 "Choice").

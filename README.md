@@ -64,7 +64,7 @@ The graph is derived from the text.
 ## Quick Example
 
 ```mnc
-= canvas: Simple Auth Flow v0.2
+= canvas: Simple Auth Flow v0.3
 
 == style: Service
 - shape: rounded
@@ -163,8 +163,8 @@ Inline links are preferred for narrative and flow modeling.
 markdown-node-canvas/
   README.md
   spec/
-    mnc-v0.2.md
-    mnc-v0.2.ebnf
+    mnc-v0.3.md
+    mnc-v0.3.ebnf
     parsing-outline.md
     scaling.md
   examples/
@@ -197,8 +197,8 @@ markdown-node-canvas/
 
 
 
-- mnc-v0.2.md — Normative specification
-- mnc-v0.2.ebnf — Compact formal grammar
+- mnc-v0.3.md — Normative specification
+- mnc-v0.3.ebnf — Compact formal grammar
 - parsing-outline.md — Reference implementation guide
 - examples/ — Sample canvases
 - tests/fixtures/ — Edge case validation files
@@ -239,7 +239,7 @@ See spec for detailed guidance.
 
 ## **Status**
 
-Current version: **v0.2**
+Current version: **v0.3**
 
 This version defines:
 

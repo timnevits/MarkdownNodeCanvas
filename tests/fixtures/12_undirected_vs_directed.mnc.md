@@ -5,7 +5,7 @@
 # - Undirected edge A01 - A02 exists (distinct from directed)
 # (Whether UI renders both is up to the application.)
 
-= canvas: Directed vs Undirected v0.2
+= canvas: Directed vs Undirected v0.3
 
 == A01: Node A
 No inline links.

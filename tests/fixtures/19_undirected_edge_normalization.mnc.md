@@ -6,7 +6,7 @@
 # - label should be "second" (later override wins)
 # If you choose NOT to normalize, this fixture should be marked FAIL or updated accordingly.
 
-= canvas: Undirected Normalization v0.2
+= canvas: Undirected Normalization v0.3
 
 == A01: Node A
 No inline links.

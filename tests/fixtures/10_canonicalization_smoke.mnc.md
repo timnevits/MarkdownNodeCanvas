@@ -8,7 +8,7 @@
 # - Link property order: id, type, route, line, width, color, arrow, label, style, others
 # - Bodies preserved
 
-= canvas: Canonicalization Smoke v0.2
+= canvas: Canonicalization Smoke v0.3
 
 == style: Zeta
 - border: #000000

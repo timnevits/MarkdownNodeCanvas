@@ -6,7 +6,7 @@
 # - One explicit link line at top-level should parse
 # - One rule line at top-level should parse
 
-= canvas: Directive Precedence v0.2
+= canvas: Directive Precedence v0.3
 
 - rule: #x -> style Default
 

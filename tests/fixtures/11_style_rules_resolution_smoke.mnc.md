@@ -5,7 +5,7 @@
 # - Apply Default, then rule #x -> XStyle, then rule #y -> YStyle
 # - If both set same key (e.g., border), YStyle wins due to later rule declaration
 
-= canvas: Style Rules Resolution v0.2
+= canvas: Style Rules Resolution v0.3
 
 == style: Default
 - border: #111111

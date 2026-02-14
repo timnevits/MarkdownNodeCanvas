@@ -7,7 +7,7 @@
 # Recommended: FAIL on unclosed quote (hard parse error), since it makes tokenization ambiguous.
 # Expected: FAIL (unclosed quote in style="...)
 
-= canvas: Malformed Props v0.2
+= canvas: Malformed Props v0.3
 
 == A01: Bad Props (pos=10,10 size=200x120 style="Dark Panel tags=#x)
 This should fail to parse due to an unclosed quote in props.

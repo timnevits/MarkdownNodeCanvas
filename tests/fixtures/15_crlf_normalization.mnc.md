@@ -6,7 +6,7 @@
 # - Body text lines are preserved (aside from newline normalization policy).
 # - Inline edge A01 -> A02 exists.
 
-= canvas: CRLF Normalization v0.2
+= canvas: CRLF Normalization v0.3
 
 == A01: CRLF Node
 Line 1

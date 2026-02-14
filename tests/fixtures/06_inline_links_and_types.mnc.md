@@ -7,7 +7,7 @@
 #   A02 -> A03 type=Data
 # - No explicit link overrides
 
-= canvas: Inline Links v0.2
+= canvas: Inline Links v0.3
 
 == A01: Start
 Choices:

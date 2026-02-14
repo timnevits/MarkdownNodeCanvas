@@ -4,7 +4,7 @@
 # - Edge A01 -> A02 exists (structural-only)
 # - Undirected edge A02 - A03 exists
 
-= canvas: Structural Only Edges v0.2
+= canvas: Structural Only Edges v0.3
 
 == A01: Node One
 No inline edges.

@@ -4,7 +4,7 @@
 # - Only edge A01 -> A04 exists
 # - No edges A01 -> A02 or A01 -> A03
 
-= canvas: Code Fence Variants v0.2
+= canvas: Code Fence Variants v0.3
 
 == A01: Source
 Real edge: [Real](mnc:A04 "Control")
